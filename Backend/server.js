@@ -41,6 +41,43 @@ app.get("/videoInfo", async (req, res) => {
   }
 });
 
+// Endpoint to download video based on selected quality
+
+// app.get("/download", async (req, res) => {
+//   try {
+//     const { url, itag } = req.query; // Get video URL and selected itag (quality) from query parameters
+
+//     // Validate URL parameter
+//     const url2 = String(req.query.url); // Explicitly convert to string
+
+//     if (typeof url !== "string") {
+//       throw new Error("Invalid URL parameter");
+//     }
+
+//     // Fetch video information asynchronously and get formats array
+//     const info = await ytdl.getInfo(url2);
+//     const formats = info.formats;
+
+//     // Choose the format based on itag (quality)
+//     const format = ytdl.chooseFormat(formats, { quality: itag });
+
+//     if (!format) {
+//       throw new Error(`No format found for itag ${itag}`);
+//     }
+
+//     // Set headers for file download
+//     res.header(
+//       "Content-Disposition",
+//       `attachment; filename="${sanitize(format.title)}.mp4"`
+//     );
+
+//     // Pipe video stream to response
+//     ytdl(url2, { format }).pipe(res);
+//   } catch (err) {
+//     console.error("Error downloading video:", err);
+//     res.status(500).send("Failed to download video");
+//   }
+// });
 app.get("/download", async (req, res) => {
   try {
     const videoUrl = req.query.url;
@@ -51,7 +88,7 @@ app.get("/download", async (req, res) => {
 
     const format = ytdl.chooseFormat(info.formats, { quality: itag });
     if (!format) {
-      return res.status(400).send("Format not found");
+      return res.status(400).send('Format not found');
     }
 
     const isAudioOnly = format.mimeType.includes("audio");
@@ -59,14 +96,22 @@ app.get("/download", async (req, res) => {
     console.log("fileExtension", fileExtension);
 
     const headers = {
-      "Content-Disposition": `attachment; filename*=UTF-8''${encodeURIComponent(
-        videoTitle
-      )}.${fileExtension}`,
+      "Content-Disposition": `attachment; filename*=UTF-8''${encodeURIComponent(videoTitle)}.${fileExtension}`,
       "Content-Type": format.mimeType,
     };
 
+    const contentLength = format.contentLength;
+    if (contentLength) {
+      headers["Content-Length"] = contentLength;
+    }
+
     res.set(headers);
-    ytdl(videoUrl, { format }).pipe(res);
+    ytdl(videoUrl, { format })
+      .on('error', (err) => {
+        console.error('Error downloading video:', err);
+        res.status(500).send('Failed to download video');
+      })
+      .pipe(res); 
   } catch (err) {
     console.error("Error downloading video:", err);
     res.status(500).send("Failed to download video");
@@ -77,5 +122,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-module.exports = app;
