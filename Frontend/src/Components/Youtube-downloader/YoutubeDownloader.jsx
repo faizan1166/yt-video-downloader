@@ -67,7 +67,7 @@ function YoutubeDownloader() {
 
       {videoDetails && !loading && (
         <div>
-          <div className="rounded overflow-hidden shadow-md">
+          <div className="rounded overflow-hidden shadow-md mt-4">
             <div className="iframe-container">
               <iframe
                 src={videoDetails?.embedUrl}
