@@ -1,0 +1,8 @@
+[build]
+  command = "npm install && npm run build"
+  functions = "functions" # Path to your serverless functions directory
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
