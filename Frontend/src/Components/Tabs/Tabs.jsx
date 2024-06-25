@@ -2,6 +2,7 @@ import {
   ArrowDownTrayIcon,
   SpeakerXMarkIcon,
 } from "@heroicons/react/24/outline";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function Tabs({ videoDetails, videoUrl }) {
@@ -85,7 +86,7 @@ export default function Tabs({ videoDetails, videoUrl }) {
                             className="bg-emerald-500 text-white text-xs p-2 rounded-md hover:bg-emerald-600"
                             onClick={() =>
                               window.open(
-                                `http://localhost:5000/download?url=${videoUrl}&itag=${quality.itag}`
+                                `https://yt-video-downloader-topaz.vercel.app/download?url=${videoUrl}&itag=${quality.itag}`
                               )
                             }
                             target="_blank"
@@ -118,7 +119,7 @@ export default function Tabs({ videoDetails, videoUrl }) {
                             className="bg-emerald-500 text-white text-xs p-2 rounded-md hover:bg-emerald-600"
                             onClick={() =>
                               window.open(
-                                `http://localhost:5000/download?url=${videoUrl}&itag=${quality.itag}`
+                                `https://yt-video-downloader-topaz.vercel.app/download?url=${videoUrl}&itag=${quality.itag}`
                               )
                             }
                             target="_blank"

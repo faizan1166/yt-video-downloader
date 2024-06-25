@@ -12,7 +12,7 @@ function YoutubeDownloader() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/videoInfo?url=${videoUrl}`
+        `https://yt-video-downloader-topaz.vercel.app/videoInfo?url=${videoUrl}`
       );
       setVideoDetails(response.data);
       setLoading(false);
