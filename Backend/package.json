@@ -15,6 +15,7 @@
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
     "sanitize-filename": "^1.6.3",
-    "ytdl-core": "^4.11.5"
+    "ytdl-core": "^4.11.5",
+    "cors": "^2.8.5"
   }
 }
