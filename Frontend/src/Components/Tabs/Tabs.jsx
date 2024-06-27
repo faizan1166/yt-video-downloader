@@ -86,7 +86,7 @@ export default function Tabs({ videoDetails, videoUrl }) {
                             className="bg-emerald-500 text-white text-xs p-2 rounded-md hover:bg-emerald-600"
                             onClick={() =>
                               window.open(
-                                `https://yt-video-downloader-topaz.vercel.app/download?url=${videoUrl}&itag=${quality.itag}`
+                                `https://yt-backend.glitch.me/download?url=${videoUrl}&itag=${quality.itag}`
                               )
                             }
                             target="_blank"
