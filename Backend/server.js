@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors")
 const app = express();
 const ytdl = require("ytdl-core");
 const sanitize = require("sanitize-filename");
@@ -7,7 +8,7 @@ function bytesToMB(bytes) {
   if (typeof bytes !== "string") return "Unknown";
   return (bytes / (1024 * 1024)).toFixed(2);
 }
-
+app.use(cors())
 app.get("/videoInfo", async (req, res) => {
   try {
     const videoUrl = req.query.url;
