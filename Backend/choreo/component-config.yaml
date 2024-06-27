@@ -1,0 +1,11 @@
+version: 1
+services:
+  backend:
+    image: your-docker-registry/your-node-app:latest
+    ports:
+      - 80:3000  # Map container port 3000 to host port 80
+    environment:
+      NODE_ENV: production
+      PORT: 5000  # Ensure your Node.js app listens on this port
+    command: npm start
+    restart: always
